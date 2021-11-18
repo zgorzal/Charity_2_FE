@@ -8,10 +8,12 @@ import FoundationSection from "./mainPage/foundationSection/FoundationSection";
 import Footer from "./mainPage/footer/Footer";
 
 const API_GET_ALL_QUANTITY = "http://localhost:8080/donation/quantity";
+const API_GET_NUMBER_OF_DONATIONS = "http://localhost:8080/donation/count";
 
 class App extends Component {
   state = {
     donationsAllQuantity: null,
+    numberOfDonations: null,
   };
 
   GetAllQuantityFetch = () => {
@@ -28,11 +30,29 @@ class App extends Component {
           donationsAllQuantity: data.quantity,
         });
       })
-      .catch((error) => console.log(console.error()));
+      .catch((error) => console.log(error));
+  };
+
+  GetNumberOfDonations = () => {
+    fetch(API_GET_NUMBER_OF_DONATIONS)
+      .then((response) => {
+        if (response.ok) {
+          return response;
+        }
+        throw Error(response.status);
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({
+          numberOfDonations: data.numberOfDonations,
+        });
+      })
+      .catch((error) => console.log(error));
   };
 
   componentDidMount() {
     this.GetAllQuantityFetch();
+    this.GetNumberOfDonations();
   }
 
   render() {
@@ -41,6 +61,7 @@ class App extends Component {
         <HeaderMainPage />
         <SummarySection
           donationsAllQuantity={this.state.donationsAllQuantity}
+          numberOfDonations={this.state.numberOfDonations}
         />
         <StepsSection />
         <AboutSection />

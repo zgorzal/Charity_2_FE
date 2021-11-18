@@ -2,6 +2,7 @@ import React from "react";
 
 const SummarySection = (props) => {
   const donationsAllQuantity = props.donationsAllQuantity;
+  const numberOfDonations = props.numberOfDonations;
 
   return (
     <section id="stats" className="stats">
@@ -16,7 +17,7 @@ const SummarySection = (props) => {
         </div>
 
         <div className="stats--item">
-          <em>5</em>
+          <em>{numberOfDonations}</em>
           <h3>Przekazanych darów</h3>
           <p>
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam
