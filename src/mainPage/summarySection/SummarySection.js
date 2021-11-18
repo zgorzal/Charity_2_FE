@@ -1,11 +1,13 @@
 import React from "react";
 
 const SummarySection = (props) => {
+  const donationsAllQuantity = props.donationsAllQuantity;
+
   return (
     <section id="stats" className="stats">
       <div className="container container--85">
         <div className="stats--item">
-          <em>10</em>
+          <em>{donationsAllQuantity}</em>
           <h3>Oddanych worków</h3>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius est
