@@ -9,11 +9,13 @@ import Footer from "./mainPage/footer/Footer";
 
 const API_GET_ALL_QUANTITY = "http://localhost:8080/donation/quantity";
 const API_GET_NUMBER_OF_DONATIONS = "http://localhost:8080/donation/count";
+const API_GET_ALL_INSTITUTIONS = "http://localhost:8080/institution";
 
 class App extends Component {
   state = {
     donationsAllQuantity: null,
     numberOfDonations: null,
+    institutions: [],
   };
 
   GetAllQuantityFetch = () => {
@@ -50,9 +52,27 @@ class App extends Component {
       .catch((error) => console.log(error));
   };
 
+  GetAllInstitutions = () => {
+    fetch(API_GET_ALL_INSTITUTIONS)
+      .then((response) => {
+        if (response.ok) {
+          return response;
+        }
+        throw Error(response.status);
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({
+          institutions: data,
+        });
+      })
+      .catch((error) => console.log(error));
+  };
+
   componentDidMount() {
     this.GetAllQuantityFetch();
     this.GetNumberOfDonations();
+    this.GetAllInstitutions();
   }
 
   render() {
@@ -65,7 +85,7 @@ class App extends Component {
         />
         <StepsSection />
         <AboutSection />
-        <FoundationSection />
+        <FoundationSection institutions={this.state.institutions} />
         <Footer />
       </>
     );
