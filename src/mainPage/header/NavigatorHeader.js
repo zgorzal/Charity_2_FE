@@ -2,6 +2,10 @@ import React from "react";
 import Button from "../../component/Button";
 
 const NavigatorHeader = (props) => {
+  const StartButton = props.startButton;
+  const DonateButton = props.donateButton;
+  const donateFormIsActive = props.donateFormIsActive;
+
   return (
     <nav className="container container--70">
       <ul className="nav--actions">
@@ -17,21 +21,36 @@ const NavigatorHeader = (props) => {
       </ul>
 
       <ul>
-        <li>
-          <Button name="Start" />
-        </li>
-        <li>
-          <Button name="O co chodzi?" />
-        </li>
-        <li>
-          <Button name="O nas" />
-        </li>
-        <li>
-          <Button name="Fundacje i organizacje" />
-        </li>
-        <li>
-          <Button name="Przekaż dary" />
-        </li>
+        {donateFormIsActive && (
+          <li>
+            <Button name="Start" handleClick={StartButton} />
+          </li>
+        )}
+
+        {!donateFormIsActive && (
+          <li>
+            <Button name="O co chodzi?" />
+          </li>
+        )}
+
+        {!donateFormIsActive && (
+          <li>
+            <Button name="O nas" />
+          </li>
+        )}
+
+        {!donateFormIsActive && (
+          <li>
+            <Button name="Fundacje i organizacje" />
+          </li>
+        )}
+
+        {!donateFormIsActive && (
+          <li>
+            <Button name="Przekaż dary" handleClick={DonateButton} />
+          </li>
+        )}
+
         <li>
           <Button name="Kontakt" />
         </li>
