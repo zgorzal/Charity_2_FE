@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Instructions from "./Instructions";
 import StepOne from "./StepOne";
+import StepTwo from "./StepTwo";
 
 const API_GET_ALL_CATEGORIES = "http://localhost:8080/category";
 
@@ -8,6 +9,7 @@ class DonateForm extends Component {
   state = {
     step: 1,
     categories: [],
+    numberOfBags: "",
   };
 
   GetAllCategoriesFetch = () => {
@@ -53,6 +55,12 @@ class DonateForm extends Component {
     });
   };
 
+  handleInputBags = (e) => {
+    this.setState({
+      numberOfBags: e.target.value,
+    });
+  };
+
   componentDidMount() {
     this.GetAllCategoriesFetch();
   }
@@ -74,7 +82,13 @@ class DonateForm extends Component {
                 handleNextButtonClick={this.handleNextButtonClick}
               />
             ) : null}
-            {/* {this.state.step === 2 ? <StepTwo /> : null} */}
+            {this.state.step === 2 ? (
+              <StepTwo
+                handleInputBags={this.handleInputBags}
+                handleNextButtonClick={this.handleNextButtonClick}
+                numberOfBags={this.state.numberOfBags}
+              />
+            ) : null}
           </form>
         </div>
       </section>
