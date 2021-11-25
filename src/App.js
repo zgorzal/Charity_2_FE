@@ -115,7 +115,9 @@ class App extends Component {
           donateFormIsActive={this.state.donateFormIsActive}
         />
 
-        {this.state.donateFormIsVisible && <DonateForm />}
+        {this.state.donateFormIsVisible && (
+          <DonateForm fundations={this.state.institutions} />
+        )}
 
         {this.state.summarySectionIsVisible && (
           <SummarySection
