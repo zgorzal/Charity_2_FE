@@ -3,6 +3,7 @@ import Instructions from "./Instructions";
 import StepOne from "./StepOne";
 import StepTwo from "./StepTwo";
 import StepThree from "./StepThree";
+import StepFour from "./StepFour";
 
 const API_GET_ALL_CATEGORIES = "http://localhost:8080/category";
 
@@ -12,6 +13,13 @@ class DonateForm extends Component {
     categories: [],
     numberOfBags: "",
     selectFundationId: "",
+    street: "",
+    city: "",
+    zipCode: "",
+    phone: "",
+    date: "",
+    time: "",
+    comments: "",
   };
 
   GetAllCategoriesFetch = () => {
@@ -69,6 +77,48 @@ class DonateForm extends Component {
     });
   };
 
+  handleInputStreet = (e) => {
+    this.setState({
+      street: e.target.value,
+    });
+  };
+
+  handleInputCity = (e) => {
+    this.setState({
+      city: e.target.value,
+    });
+  };
+
+  handleInputZipCode = (e) => {
+    this.setState({
+      zipCode: e.target.value,
+    });
+  };
+
+  handleInputPhone = (e) => {
+    this.setState({
+      phone: e.target.value,
+    });
+  };
+
+  handleInputDate = (e) => {
+    this.setState({
+      date: e.target.value,
+    });
+  };
+
+  handleInputTime = (e) => {
+    this.setState({
+      time: e.target.value,
+    });
+  };
+
+  handleInputComments = (e) => {
+    this.setState({
+      comments: e.target.value,
+    });
+  };
+
   componentDidMount() {
     this.GetAllCategoriesFetch();
   }
@@ -102,6 +152,25 @@ class DonateForm extends Component {
                 handleFundationRadioButton={this.handleFundationRadioButton}
                 handleNextButtonClick={this.handleNextButtonClick}
                 fundations={this.props.fundations}
+              />
+            ) : null}
+            {this.state.step === 4 ? (
+              <StepFour
+                handleInputStreet={this.handleInputStreet}
+                street={this.state.street}
+                handleInputCity={this.handleInputCity}
+                city={this.state.city}
+                handleNextButtonClick={this.handleNextButtonClick}
+                handleInputZipCode={this.handleInputZipCode}
+                zipCode={this.state.zipCode}
+                handleInputPhone={this.handleInputPhone}
+                phone={this.state.phone}
+                handleInputDate={this.handleInputDate}
+                date={this.state.date}
+                handleInputTime={this.handleInputTime}
+                time={this.state.time}
+                handleInputComments={this.handleInputComments}
+                comments={this.state.comments}
               />
             ) : null}
           </form>
