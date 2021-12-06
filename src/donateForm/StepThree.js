@@ -9,6 +9,7 @@ const StepThree = (props) => {
       <Fundation
         fundations={props.fundations}
         handleFundationRadioButton={props.handleFundationRadioButton}
+        selectFundationId={props.selectFundationId}
       />
 
       <div className="form-group form-group--buttons">

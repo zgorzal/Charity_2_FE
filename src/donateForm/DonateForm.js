@@ -4,6 +4,7 @@ import StepOne from "./StepOne";
 import StepTwo from "./StepTwo";
 import StepThree from "./StepThree";
 import StepFour from "./StepFour";
+import StepFive from "./StepFive";
 
 const API_GET_ALL_CATEGORIES = "http://localhost:8080/category";
 
@@ -13,6 +14,7 @@ class DonateForm extends Component {
     categories: [],
     numberOfBags: "",
     selectFundationId: "",
+    selectFundationName: "",
     street: "",
     city: "",
     zipCode: "",
@@ -60,8 +62,14 @@ class DonateForm extends Component {
   };
 
   handleFundationRadioButton = (e) => {
-    this.setState({
-      selectFundationId: e.target.value,
+    const fundations = this.props.fundations;
+    fundations.forEach((fundation) => {
+      if (Number(fundation.id) === Number(e.target.value)) {
+        this.setState({
+          selectFundationId: e.target.value,
+          selectFundationName: fundation.name,
+        });
+      }
     });
   };
 
@@ -126,12 +134,15 @@ class DonateForm extends Component {
   render() {
     return (
       <section className="form--steps">
-        <Instructions step={this.state.step} />
+        {this.state.step <= 4 ? <Instructions step={this.state.step} /> : null}
 
         <div className="form--steps-container">
-          <div className="form--steps-counter">
-            Krok <span>{this.state.step}</span>/4
-          </div>
+          {this.state.step <= 4 ? (
+            <div className="form--steps-counter">
+              Krok <span>{this.state.step}</span>/4
+            </div>
+          ) : null}
+
           <form action="form-confirmation.html" method="post">
             {this.state.step === 1 ? (
               <StepOne
@@ -152,6 +163,7 @@ class DonateForm extends Component {
                 handleFundationRadioButton={this.handleFundationRadioButton}
                 handleNextButtonClick={this.handleNextButtonClick}
                 fundations={this.props.fundations}
+                selectFundationId={this.state.selectFundationId}
               />
             ) : null}
             {this.state.step === 4 ? (
@@ -171,6 +183,12 @@ class DonateForm extends Component {
                 time={this.state.time}
                 handleInputComments={this.handleInputComments}
                 comments={this.state.comments}
+              />
+            ) : null}
+            {this.state.step === 5 ? (
+              <StepFive
+                handleNextButtonClick={this.handleNextButtonClick}
+                summary={this.state}
               />
             ) : null}
           </form>
