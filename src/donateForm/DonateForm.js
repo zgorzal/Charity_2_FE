@@ -5,6 +5,7 @@ import StepTwo from "./StepTwo";
 import StepThree from "./StepThree";
 import StepFour from "./StepFour";
 import StepFive from "./StepFive";
+import Confirmation from "./Confirmation"
 
 const API_GET_ALL_CATEGORIES = "https://zgorzalcharity.herokuapp.com/category";
 
@@ -190,6 +191,9 @@ class DonateForm extends Component {
                                 handleNextButtonClick={this.handleNextButtonClick}
                                 summary={this.state}
                             />
+                        ) : null}
+                        {this.state.step === 6 ? (
+                            <Confirmation/>
                         ) : null}
                     </form>
                 </div>

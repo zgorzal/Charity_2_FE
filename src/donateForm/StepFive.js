@@ -30,6 +30,7 @@ const StepFive = (props) => {
         })
             .then((response) => {
                 if (response.ok) {
+                    props.handleNextButtonClick(6)
                     return response;
                 }
                 throw Error(response.status);
