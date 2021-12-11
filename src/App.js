@@ -7,6 +7,7 @@ import AboutSection from "./mainPage/aboutSection/AboutSection";
 import FoundationSection from "./mainPage/foundationSection/FoundationSection";
 import Footer from "./mainPage/footer/Footer";
 import DonateForm from "./donateForm/DonateForm";
+import Login from "./login/Login";
 
 const API_GET_ALL_QUANTITY = "https://zgorzalcharity.herokuapp.com/donation/quantity";
 const API_GET_NUMBER_OF_DONATIONS = "https://zgorzalcharity.herokuapp.com/donation/count";
@@ -23,6 +24,7 @@ class App extends Component {
         numberOfDonations: null,
         institutions: [],
         donateFormIsActive: false,
+        loginSectionIsActive: false
     };
 
     GetAllQuantityFetch = () => {
@@ -84,6 +86,7 @@ class App extends Component {
             foundationSectionIsVisible: false,
             donateFormIsActive: true,
             donateFormIsVisible: true,
+            loginSectionIsActive: false
         });
     };
 
@@ -95,8 +98,21 @@ class App extends Component {
             foundationSectionIsVisible: true,
             donateFormIsActive: false,
             donateFormIsVisible: false,
+            loginSectionIsActive: false
         });
     };
+
+    handleLoginButton = () => {
+        this.setState({
+            aboutSectionIsVisible: false,
+            summarySectionIsVisible: false,
+            stepsSectionIsVisible: false,
+            foundationSectionIsVisible: false,
+            donateFormIsActive: false,
+            donateFormIsVisible: false,
+            loginSectionIsActive: true
+        });
+    }
 
     componentDidMount() {
         this.GetAllQuantityFetch();
@@ -110,9 +126,12 @@ class App extends Component {
                 <HeaderMainPage
                     startButton={this.handleStartButton}
                     donateButton={this.handleDonateButton}
+                    loginButton={this.handleLoginButton}
                     donateFormIsActive={this.state.donateFormIsActive}
+                    loginSectionIsActive={this.state.loginSectionIsActive}
                 />
                 {this.state.donateFormIsVisible && (<DonateForm fundations={this.state.institutions}/>)}
+                {this.state.loginSectionIsActive && (<Login/>)}
                 {this.state.summarySectionIsVisible && (
                     <SummarySection
                         donationsAllQuantity={this.state.donationsAllQuantity}

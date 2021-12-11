@@ -4,13 +4,16 @@ import Button from "../../component/Button";
 const NavigatorHeader = (props) => {
     const StartButton = props.startButton;
     const DonateButton = props.donateButton;
+    const LoginButton = props.loginButton;
     const donateFormIsActive = props.donateFormIsActive;
+    const loginSectionIsActive = props.loginSectionIsActive;
+    const activeSection = donateFormIsActive || loginSectionIsActive
 
     return (
         <nav className="container container--70">
             <ul className="nav--actions">
                 <li>
-                    <Button name="Zaloguj" classList={["btn--small"]}/>
+                    <Button name="Zaloguj" classList={["btn--small"]} handleClick={LoginButton}/>
                 </li>
                 <li>
                     <Button
@@ -21,13 +24,13 @@ const NavigatorHeader = (props) => {
             </ul>
 
             <ul>
-                {donateFormIsActive && (
+                {activeSection && (
                     <li>
                         <Button name="Start" handleClick={StartButton}/>
                     </li>
                 )}
 
-                {!donateFormIsActive && (
+                {!activeSection && (
                     <div onClick={() => window.location.replace("/#steps")}>
                         <li>
                             <Button name="O co chodzi?"/>
@@ -35,7 +38,7 @@ const NavigatorHeader = (props) => {
                     </div>
                 )}
 
-                {!donateFormIsActive && (
+                {!activeSection && (
                     <div onClick={() => window.location.replace("/#about-us")}>
                         <li>
                             <Button name="O nas"/>
@@ -43,7 +46,7 @@ const NavigatorHeader = (props) => {
                     </div>
                 )}
 
-                {!donateFormIsActive && (
+                {!activeSection  && (
                     <div onClick={() => window.location.replace("/#help")}>
                         <li>
                             <Button name="Fundacje i organizacje"/>
@@ -51,7 +54,7 @@ const NavigatorHeader = (props) => {
                     </div>
                 )}
 
-                {!donateFormIsActive && (
+                {!activeSection && (
                     <li>
                         <Button name="Przekaż dary" handleClick={DonateButton}/>
                     </li>
