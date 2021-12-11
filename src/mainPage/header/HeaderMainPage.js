@@ -6,12 +6,15 @@ const HeaderMainPage = (props) => {
     const startButton = props.startButton;
     const donateButton = props.donateButton;
     const loginButton = props.loginButton;
+    const registerButton = props.registerButton;
     const donateFormIsActive = props.donateFormIsActive;
     const loginSectionIsActive = props.loginSectionIsActive
+    const registerSectionIsActive = props.registerSectionIsActive
+
     let headerClass = ""
     if (donateFormIsActive) {
         headerClass = "header--form-page"
-    } else if (loginSectionIsActive) {
+    } else if (loginSectionIsActive || registerSectionIsActive) {
         headerClass = ""
     } else {
         headerClass = "header--main-page"
@@ -22,12 +25,15 @@ const HeaderMainPage = (props) => {
                 startButton={startButton}
                 donateButton={donateButton}
                 loginButton={loginButton}
+                registerButton={registerButton}
                 donateFormIsActive={donateFormIsActive}
                 loginSectionIsActive={loginSectionIsActive}
+                registerSectionIsActive={registerSectionIsActive}
             />
             <TitleHeader
                 donateFormIsActive={donateFormIsActive}
                 loginSectionIsActive={loginSectionIsActive}
+                registerSectionIsActive={registerSectionIsActive}
             />
         </header>
     );

@@ -8,6 +8,7 @@ import FoundationSection from "./mainPage/foundationSection/FoundationSection";
 import Footer from "./mainPage/footer/Footer";
 import DonateForm from "./donateForm/DonateForm";
 import Login from "./login/Login";
+import Register from "./register/Register";
 
 const API_GET_ALL_QUANTITY = "https://zgorzalcharity.herokuapp.com/donation/quantity";
 const API_GET_NUMBER_OF_DONATIONS = "https://zgorzalcharity.herokuapp.com/donation/count";
@@ -24,7 +25,8 @@ class App extends Component {
         numberOfDonations: null,
         institutions: [],
         donateFormIsActive: false,
-        loginSectionIsActive: false
+        loginSectionIsActive: false,
+        registerSectionIsActive: false
     };
 
     GetAllQuantityFetch = () => {
@@ -86,7 +88,8 @@ class App extends Component {
             foundationSectionIsVisible: false,
             donateFormIsActive: true,
             donateFormIsVisible: true,
-            loginSectionIsActive: false
+            loginSectionIsActive: false,
+            registerSectionIsActive: false
         });
     };
 
@@ -98,7 +101,8 @@ class App extends Component {
             foundationSectionIsVisible: true,
             donateFormIsActive: false,
             donateFormIsVisible: false,
-            loginSectionIsActive: false
+            loginSectionIsActive: false,
+            registerSectionIsActive: false
         });
     };
 
@@ -110,7 +114,21 @@ class App extends Component {
             foundationSectionIsVisible: false,
             donateFormIsActive: false,
             donateFormIsVisible: false,
-            loginSectionIsActive: true
+            loginSectionIsActive: true,
+            registerSectionIsActive: false
+        });
+    }
+
+    handleRegisterButton = () => {
+        this.setState({
+            aboutSectionIsVisible: false,
+            summarySectionIsVisible: false,
+            stepsSectionIsVisible: false,
+            foundationSectionIsVisible: false,
+            donateFormIsActive: false,
+            donateFormIsVisible: false,
+            loginSectionIsActive: false,
+            registerSectionIsActive: true
         });
     }
 
@@ -127,11 +145,14 @@ class App extends Component {
                     startButton={this.handleStartButton}
                     donateButton={this.handleDonateButton}
                     loginButton={this.handleLoginButton}
+                    registerButton={this.handleRegisterButton}
                     donateFormIsActive={this.state.donateFormIsActive}
                     loginSectionIsActive={this.state.loginSectionIsActive}
+                    registerSectionIsActive={this.state.registerSectionIsActive}
                 />
                 {this.state.donateFormIsVisible && (<DonateForm fundations={this.state.institutions}/>)}
                 {this.state.loginSectionIsActive && (<Login/>)}
+                {this.state.registerSectionIsActive && (<Register/>)}
                 {this.state.summarySectionIsVisible && (
                     <SummarySection
                         donationsAllQuantity={this.state.donationsAllQuantity}

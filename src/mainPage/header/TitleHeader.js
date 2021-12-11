@@ -3,6 +3,7 @@ import React from "react";
 const TitleHeader = (props) => {
     const donateFormIsActive = props.donateFormIsActive;
     const loginSectionIsActive = props.loginSectionIsActive;
+    const registerSectionIsActive = props.registerSectionIsActive
     let title;
     if (donateFormIsActive) {
         title = (
@@ -44,7 +45,7 @@ const TitleHeader = (props) => {
                 </div>
             </div>
         );
-    } else if (loginSectionIsActive) {
+    } else if (loginSectionIsActive || registerSectionIsActive) {
         title = null
     } else {
         title = (

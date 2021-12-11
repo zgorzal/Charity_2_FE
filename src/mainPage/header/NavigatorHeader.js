@@ -5,9 +5,11 @@ const NavigatorHeader = (props) => {
     const StartButton = props.startButton;
     const DonateButton = props.donateButton;
     const LoginButton = props.loginButton;
+    const registerButton = props.registerButton
     const donateFormIsActive = props.donateFormIsActive;
     const loginSectionIsActive = props.loginSectionIsActive;
-    const activeSection = donateFormIsActive || loginSectionIsActive
+    const registerSectionIsActive = props.registerSectionIsActive
+    const activeSection = donateFormIsActive || loginSectionIsActive || registerSectionIsActive
 
     return (
         <nav className="container container--70">
@@ -19,6 +21,7 @@ const NavigatorHeader = (props) => {
                     <Button
                         name="Załóż konto"
                         classList={["btn--small btn--highlighted"]}
+                        handleClick={registerButton}
                     />
                 </li>
             </ul>
@@ -46,7 +49,7 @@ const NavigatorHeader = (props) => {
                     </div>
                 )}
 
-                {!activeSection  && (
+                {!activeSection && (
                     <div onClick={() => window.location.replace("/#help")}>
                         <li>
                             <Button name="Fundacje i organizacje"/>
