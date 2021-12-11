@@ -159,7 +159,7 @@ class App extends Component {
                         numberOfDonations={this.state.numberOfDonations}
                     />
                 )}
-                {this.state.stepsSectionIsVisible && <StepsSection/>}
+                {this.state.stepsSectionIsVisible && <StepsSection registerButton={this.handleRegisterButton}/>}
                 {this.state.aboutSectionIsVisible && <AboutSection/>}
                 {this.state.foundationSectionIsVisible && (<FoundationSection institutions={this.state.institutions}/>)}
                 <Footer/>
