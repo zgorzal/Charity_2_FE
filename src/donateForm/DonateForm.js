@@ -30,8 +30,9 @@ class DonateForm extends Component {
             .then((response) => {
                 if (response.ok) {
                     return response;
+                } else {
+                    return response.text().then(text => { throw new Error(text) })
                 }
-                throw Error(response.status);
             })
             .then((response) => response.json())
             .then((data) => {

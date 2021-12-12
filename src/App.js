@@ -13,6 +13,7 @@ import Register from "./register/Register";
 const API_GET_ALL_QUANTITY = "https://zgorzalcharity.herokuapp.com/donation/quantity";
 const API_GET_NUMBER_OF_DONATIONS = "https://zgorzalcharity.herokuapp.com/donation/count";
 const API_GET_ALL_INSTITUTIONS = "https://zgorzalcharity.herokuapp.com/institution";
+const API_POST_ADD_USER = "https://zgorzalcharity.herokuapp.com/user";
 
 class App extends Component {
     state = {
@@ -34,8 +35,9 @@ class App extends Component {
             .then((response) => {
                 if (response.ok) {
                     return response;
+                } else {
+                    return response.text().then(text => { throw new Error(text) })
                 }
-                // throw Error(response.status);
             })
             .then((response) => response.json())
             .then((data) => {
@@ -51,8 +53,9 @@ class App extends Component {
             .then((response) => {
                 if (response.ok) {
                     return response;
+                } else {
+                    return response.text().then(text => { throw new Error(text) })
                 }
-                throw Error(response.status);
             })
             .then((response) => response.json())
             .then((data) => {
@@ -68,14 +71,47 @@ class App extends Component {
             .then((response) => {
                 if (response.ok) {
                     return response;
+                } else {
+                    return response.text().then(text => { throw new Error(text) })
                 }
-                throw Error(response.status);
             })
             .then((response) => response.json())
             .then((data) => {
                 this.setState({
                     institutions: data,
                 });
+            })
+            .catch((error) => console.log(error));
+    };
+
+    AddUser = (e, email, password, repeatPassword) => {
+        e.preventDefault()
+        fetch(API_POST_ADD_USER, {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                email: email,
+                password: password,
+                repeatPassword: repeatPassword
+            }),
+        })
+            .then((response) => {
+                if (response.ok) {
+                    this.setState({
+                        aboutSectionIsVisible: true,
+                        summarySectionIsVisible: true,
+                        stepsSectionIsVisible: true,
+                        foundationSectionIsVisible: true,
+                        donateFormIsActive: false,
+                        donateFormIsVisible: false,
+                        loginSectionIsActive: false,
+                        registerSectionIsActive: false
+                    });
+                } else {
+                    return response.text().then(text => {
+                        throw new Error(text)
+                    })
+                }
             })
             .catch((error) => console.log(error));
     };
@@ -152,7 +188,7 @@ class App extends Component {
                 />
                 {this.state.donateFormIsVisible && (<DonateForm fundations={this.state.institutions}/>)}
                 {this.state.loginSectionIsActive && (<Login/>)}
-                {this.state.registerSectionIsActive && (<Register/>)}
+                {this.state.registerSectionIsActive && (<Register AddUser={this.AddUser} />)}
                 {this.state.summarySectionIsVisible && (
                     <SummarySection
                         donationsAllQuantity={this.state.donationsAllQuantity}

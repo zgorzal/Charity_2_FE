@@ -32,11 +32,9 @@ const StepFive = (props) => {
                 if (response.ok) {
                     props.handleNextButtonClick(6)
                     return response;
+                } else {
+                    return response.text().then(text => { throw new Error(text) })
                 }
-                throw Error(response.status);
-            })
-            .then((response) => response.json())
-            .then((data) => {
             })
             .catch((error) => console.log(error));
     };
