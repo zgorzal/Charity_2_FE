@@ -10,19 +10,22 @@ const NavigatorHeader = (props) => {
     const loginSectionIsActive = props.loginSectionIsActive;
     const registerSectionIsActive = props.registerSectionIsActive
     const activeSection = donateFormIsActive || loginSectionIsActive || registerSectionIsActive
+    const login = props.login
+    const email = props.email
 
     return (
         <nav className="container container--70">
             <ul className="nav--actions">
                 <li>
-                    <Button name="Zaloguj" classList={["btn--small"]} handleClick={LoginButton}/>
+                    {login ? <h1> {email} </h1> :
+                        <Button name="Zaloguj" classList={["btn--small"]} handleClick={LoginButton}/>}
                 </li>
                 <li>
-                    <Button
+                    {!login && (<Button
                         name="Załóż konto"
                         classList={["btn--small btn--highlighted"]}
                         handleClick={registerButton}
-                    />
+                    />)}
                 </li>
             </ul>
 

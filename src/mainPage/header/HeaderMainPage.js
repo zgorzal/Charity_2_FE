@@ -22,6 +22,8 @@ const HeaderMainPage = (props) => {
     return (
         <header className={headerClass}>
             <NavigatorHeader
+                email={props.email}
+                login={props.login}
                 startButton={startButton}
                 donateButton={donateButton}
                 loginButton={loginButton}

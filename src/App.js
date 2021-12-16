@@ -14,6 +14,8 @@ const API_GET_ALL_QUANTITY = "https://zgorzalcharity.herokuapp.com/donation/quan
 const API_GET_NUMBER_OF_DONATIONS = "https://zgorzalcharity.herokuapp.com/donation/count";
 const API_GET_ALL_INSTITUTIONS = "https://zgorzalcharity.herokuapp.com/institution";
 const API_POST_ADD_USER = "https://zgorzalcharity.herokuapp.com/user";
+const API_POST_LOGIN = "https://zgorzalcharity.herokuapp.com/login?";
+const API_GET_USER = "https://zgorzalcharity.herokuapp.com/user/1";
 
 class App extends Component {
     state = {
@@ -27,7 +29,9 @@ class App extends Component {
         institutions: [],
         donateFormIsActive: false,
         loginSectionIsActive: false,
-        registerSectionIsActive: false
+        registerSectionIsActive: false,
+        login: false,
+        email: ""
     };
 
     GetAllQuantityFetch = () => {
@@ -36,7 +40,9 @@ class App extends Component {
                 if (response.ok) {
                     return response;
                 } else {
-                    return response.text().then(text => { throw new Error(text) })
+                    return response.text().then(text => {
+                        throw new Error(text)
+                    })
                 }
             })
             .then((response) => response.json())
@@ -54,7 +60,9 @@ class App extends Component {
                 if (response.ok) {
                     return response;
                 } else {
-                    return response.text().then(text => { throw new Error(text) })
+                    return response.text().then(text => {
+                        throw new Error(text)
+                    })
                 }
             })
             .then((response) => response.json())
@@ -72,7 +80,9 @@ class App extends Component {
                 if (response.ok) {
                     return response;
                 } else {
-                    return response.text().then(text => { throw new Error(text) })
+                    return response.text().then(text => {
+                        throw new Error(text)
+                    })
                 }
             })
             .then((response) => response.json())
@@ -112,6 +122,56 @@ class App extends Component {
                         throw new Error(text)
                     })
                 }
+            })
+            .catch((error) => console.log(error));
+    };
+
+    LoginUser = (e, email, password) => {
+        e.preventDefault()
+
+        fetch(API_POST_LOGIN + "email=" + email + "&password=" + password, {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'},
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                localStorage.setItem("access_token", data.access_token)
+                localStorage.setItem("refresh_token", data.refresh_token)
+                this.setState({
+                    aboutSectionIsVisible: true,
+                    summarySectionIsVisible: true,
+                    stepsSectionIsVisible: true,
+                    foundationSectionIsVisible: true,
+                    donateFormIsActive: false,
+                    donateFormIsVisible: false,
+                    loginSectionIsActive: false,
+                    registerSectionIsActive: false,
+                    login: true,
+                    email: email
+                });
+            })
+            .catch((error) => console.log(error));
+    }
+
+    GetUser = () => {
+        fetch(API_GET_USER, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("access_token"),
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((response) => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    return response.text().then(text => {
+                        throw new Error(text)
+                    })
+                }
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data)
             })
             .catch((error) => console.log(error));
     };
@@ -178,6 +238,8 @@ class App extends Component {
         return (
             <>
                 <HeaderMainPage
+                    email={this.state.email}
+                    login={this.state.login}
                     startButton={this.handleStartButton}
                     donateButton={this.handleDonateButton}
                     loginButton={this.handleLoginButton}
@@ -187,8 +249,8 @@ class App extends Component {
                     registerSectionIsActive={this.state.registerSectionIsActive}
                 />
                 {this.state.donateFormIsVisible && (<DonateForm fundations={this.state.institutions}/>)}
-                {this.state.loginSectionIsActive && (<Login/>)}
-                {this.state.registerSectionIsActive && (<Register AddUser={this.AddUser} />)}
+                {this.state.loginSectionIsActive && (<Login LoginUser={this.LoginUser}/>)}
+                {this.state.registerSectionIsActive && (<Register AddUser={this.AddUser}/>)}
                 {this.state.summarySectionIsVisible && (
                     <SummarySection
                         donationsAllQuantity={this.state.donationsAllQuantity}
@@ -203,5 +265,6 @@ class App extends Component {
         );
     }
 }
+
 
 export default App;
