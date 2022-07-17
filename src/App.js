@@ -18,6 +18,12 @@ const API_POST_LOGIN = "https://zgorzalcharity.herokuapp.com/login?";
 const API_GET_USER = "https://zgorzalcharity.herokuapp.com/user/1";
 
 class App extends Component {
+    
+    
+    // test 
+    
+    
+    
     state = {
         aboutSectionIsVisible: true,
         summarySectionIsVisible: true,
